@@ -33,7 +33,7 @@ module FactoryGirl
     end
 
     def get(attribute_name)
-      @evaluator.send(attribute_name)
+      eval "@evaluator.#{attribute_name}"
     end
 
     def attributes_to_set_on_instance
