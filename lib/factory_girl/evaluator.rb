@@ -2,6 +2,12 @@ require "active_support/core_ext/class/attribute"
 
 module FactoryGirl
   class Evaluator
+    UNPROXIED_METHODS = %w(__send__ __id__ nil? send object_id extend instance_eval initialize block_given? raise class)
+
+    (instance_methods + private_instance_methods).sort.each do |method|
+      undef_method(method) unless UNPROXIED_METHODS.include?(method.to_s)
+    end
+
     class_attribute :callbacks, :attribute_lists
 
     def self.attribute_list
