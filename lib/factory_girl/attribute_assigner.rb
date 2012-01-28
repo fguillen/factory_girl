@@ -3,7 +3,7 @@ module FactoryGirl
     def initialize(evaluator, &instance_builder)
       @instance_builder         = instance_builder
       @evaluator                = evaluator
-      @attribute_list           = evaluator.class.attribute_list
+      @attribute_list           = evaluator.attribute_list
       @attribute_names_assigned = []
     end
 

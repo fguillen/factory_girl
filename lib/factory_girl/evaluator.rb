@@ -1,10 +1,35 @@
 require "active_support/core_ext/class/attribute"
 
 module FactoryGirl
-  class Evaluator
-    class_attribute :callbacks, :attribute_lists
+  class Evaluator < ActiveSupport::BasicObject
+    @@callbacks = []
+    @@attribute_lists = []
 
-    def self.attribute_list
+    def self.callbacks
+      @@callbacks
+    end
+
+    def self.callbacks=(value)
+      @@callbacks = value
+    end
+
+    def self.attribute_lists
+      @@attribute_lists
+    end
+
+    def self.attribute_lists=(value)
+      @@attribute_lists = value
+    end
+
+    def callbacks
+      @@callbacks
+    end
+
+    def attribute_lists
+      @@attribute_lists
+    end
+
+    def attribute_list
       AttributeList.new.tap do |list|
         attribute_lists.each do |attribute_list|
           list.apply_attributes attribute_list.to_a
@@ -18,7 +43,7 @@ module FactoryGirl
       @overrides         = overrides
       @cached_attributes = overrides
 
-      @build_strategy.add_observer(CallbackRunner.new(self.class.callbacks, self))
+      @build_strategy.add_observer(CallbackRunner.new(self.callbacks, self))
     end
 
     delegate :association, :to => :@build_strategy

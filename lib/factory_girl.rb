@@ -1,4 +1,5 @@
 require "active_support/core_ext/module/delegation"
+require "active_support/basic_object"
 
 require 'factory_girl/proxy'
 require 'factory_girl/registry'
